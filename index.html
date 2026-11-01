@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087f5b">
+<meta name="description" content="LapakKita — marketplace barang baru dan bekas di Indonesia.">
+<link rel="manifest" href="manifest.json">
+<title>LapakKita — Marketplace Indonesia</title>
+<style>
+:root{--green:#087f5b;--green2:#0ca678;--ink:#18212f;--muted:#667085;--line:#e5e9ef;--bg:#f5f7f9;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:var(--white);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top{max-width:1180px;margin:auto;padding:13px 18px;display:flex;gap:16px;align-items:center}
+.logo{font-size:24px;font-weight:850;letter-spacing:-1px;color:var(--green);white-space:nowrap}.logo span{color:#ff922b}
+.search{flex:1;display:flex;gap:8px}.search input{width:100%;border:1px solid var(--line);background:#f7f9fb;padding:12px 14px;border-radius:12px;font-size:15px;outline-color:var(--green)}
+button,.btn{border:0;border-radius:11px;background:var(--green);color:white;padding:11px 15px;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+button:hover,.btn:hover{background:#066b4d}.btn.secondary,button.secondary{background:#e8f5ef;color:var(--green)}button.ghost{background:#f1f3f5;color:#344054}
+.wrap{max-width:1180px;margin:22px auto;padding:0 18px}
+.hero{background:linear-gradient(115deg,#075e45,#0ca678);color:white;border-radius:20px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;overflow:hidden}
+.hero h1{font-size:clamp(26px,4vw,40px);line-height:1.08;margin:0 0 10px;letter-spacing:-1px}.hero p{margin:0;color:#e4fff4;max-width:550px}.hero .emoji{font-size:72px}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 13px}.sectionhead h2{font-size:21px;margin:0}
+.categories{display:flex;gap:9px;overflow-x:auto;padding:2px 0 8px}.chip{white-space:nowrap;background:white;color:#344054;border:1px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer}.chip.active{background:#dff7eb;border-color:#a5e6c7;color:#087f5b;font-weight:800}
+.layout{display:grid;grid-template-columns:1fr;gap:18px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0;box-shadow:0 2px 8px #10182808}.photo{height:170px;background:#e9f4ef;display:flex;align-items:center;justify-content:center;font-size:58px;position:relative}.photo img{width:100%;height:100%;object-fit:cover}.tag{position:absolute;top:10px;left:10px;background:#fff;border-radius:7px;padding:4px 7px;font-size:11px;font-weight:800;color:var(--green)}.cardbody{padding:12px}.price{font-size:18px;font-weight:850;margin:0 0 5px}.title{font-size:14px;margin:0 0 7px;line-height:1.35;min-height:38px}.meta{font-size:12px;color:var(--muted);margin-bottom:10px}.cardactions{display:flex;gap:7px}.cardactions button{flex:1;padding:9px 7px;font-size:12px}.empty{padding:35px 15px;text-align:center;color:var(--muted);background:white;border:1px dashed #cbd5e1;border-radius:14px;grid-column:1/-1}
+.notice{margin:20px 0;padding:13px 15px;background:#fff8e6;border:1px solid #ffe3a3;border-radius:12px;color:#7a4b00;font-size:13px}
+footer{margin-top:36px;padding:25px 18px;text-align:center;background:#fff;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.modalback{display:none;position:fixed;inset:0;background:#10182899;z-index:20;align-items:center;justify-content:center;padding:14px}.modalback.show{display:flex}.modal{background:white;border-radius:18px;padding:22px;width:min(540px,100%);max-height:92vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal h2{margin:0;font-size:21px}.x{background:#f1f3f5;color:#344054;padding:7px 11px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;font-weight:750}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid #d0d5dd;border-radius:10px;font:inherit}.field textarea{min-height:75px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formhint{font-size:12px;color:var(--muted)}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.photo{height:150px}}
+@media(max-width:650px){.top{flex-wrap:wrap;gap:10px}.logo{font-size:22px}.search{order:3;flex-basis:100%}.top>.btn{margin-left:auto}.wrap{margin:15px auto;padding:0 12px}.hero{padding:22px}.hero .emoji{font-size:48px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.photo{height:130px}.cardbody{padding:10px}.price{font-size:16px}.title{font-size:13px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="top">
+  <div class="logo">Lapak<span>Kita</span></div>
+  <div class="search"><input id="searchInput" placeholder="Cari HP, baju, sepeda, dan lainnya..." aria-label="Cari produk"><button id="searchBtn">Cari</button></div>
+  <button id="openForm">＋ Jual Barang</button>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <div><h1>Jual beli jadi lebih mudah.</h1><p>Temukan barang menarik di sekitar Indonesia. Pasang iklan gratis dan hubungi penjual secara langsung.</p><div style="margin-top:17px"><button id="heroSell" style="background:white;color:#087f5b">＋ Pasang Iklan Gratis</button></div></div>
+    <div class="emoji" aria-hidden="true">🛍️</div>
+  </section>
+  <div class="sectionhead"><h2>Jelajahi kategori</h2><span style="font-size:12px;color:#667085">Pilih kategori</span></div>
+  <div class="categories" id="categories"></div>
+  <div class="sectionhead"><h2 id="listingHeading">Barang pilihan</h2><button class="secondary" id="resetBtn">Tampilkan semua</button></div>
+  <section class="grid" id="productGrid"></section>
+  <div class="notice"><b>Catatan versi awal:</b> iklan yang kamu buat tersimpan di browser HP ini saja. Agar semua orang bisa melihat iklan yang sama, tahap berikutnya perlu menghubungkan LapakKita ke database online.</div>
+</main>
+<footer><b style="color:#087f5b">LapakKita</b> · Marketplace Indonesia<br>Utamakan transaksi aman. Jangan pernah membagikan PIN atau kode OTP.</footer>
+
+<div class="modalback" id="modalBack" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modalhead"><h2 id="modalTitle">Pasang iklan gratis</h2><button class="x" id="closeModal" aria-label="Tutup">✕</button></div>
+    <form id="listingForm">
+      <div class="field"><label for="pTitle">Nama barang *</label><input id="pTitle" required maxlength="80" placeholder="Contoh: Sepeda lipat kondisi bagus"></div>
+      <div class="two">
+        <div class="field"><label for="pPrice">Harga (Rp) *</label><input id="pPrice" required type="number" min="0" placeholder="250000"></div>
+        <div class="field"><label for="pCategory">Kategori *</label><select id="pCategory" required></select></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="pCity">Kota / Kabupaten *</label><input id="pCity" required placeholder="Contoh: Bandung"></div>
+        <div class="field"><label for="pWhatsapp">Nomor WhatsApp *</label><input id="pWhatsapp" required inputmode="tel" placeholder="628123456789"></div>
+      </div>
+      <div class="field"><label for="pDesc">Deskripsi</label><textarea id="pDesc" maxlength="500" placeholder="Ceritakan kondisi barang, kelengkapan, dan lainnya"></textarea></div>
+      <div class="field"><label for="pImage">Foto barang (opsional)</label><input id="pImage" type="file" accept="image/*"><span class="formhint">Pilih foto dari HP. Foto disimpan lokal di browser untuk demo ini.</span></div>
+      <button type="submit" style="width:100%">Terbitkan iklan</button>
+    </form>
+  </div>
+</div>
+<script>
+const cats=["Semua","Elektronik","Fashion","Rumah Tangga","Kendaraan","Hobi","Olahraga","Lainnya"];
+const sample=[
+{id:"s1",title:"Smartphone Android kondisi bagus",price:1250000,category:"Elektronik",city:"Bandung",wa:"628123456789",desc:"Contoh iklan demo. Periksa barang sebelum membeli.",emoji:"📱",sample:true},
+{id:"s2",title:"Hoodie polos nyaman dipakai",price:85000,category:"Fashion",city:"Jakarta",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"🧥",sample:true},
+{id:"s3",title:"Meja belajar minimalis",price:175000,category:"Rumah Tangga",city:"Bekasi",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"🪑",sample:true},
+{id:"s4",title:"Sepeda lipat untuk harian",price:650000,category:"Kendaraan",city:"Depok",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"🚲",sample:true},
+{id:"s5",title:"Headphone untuk musik",price:120000,category:"Elektronik",city:"Surabaya",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"🎧",sample:true},
+{id:"s6",title:"Tas kasual sehari-hari",price:95000,category:"Fashion",city:"Yogyakarta",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"🎒",sample:true},
+{id:"s7",title:"Bola sepak kondisi bagus",price:75000,category:"Olahraga",city:"Semarang",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"⚽",sample:true},
+{id:"s8",title:"Kamera untuk belajar fotografi",price:950000,category:"Hobi",city:"Malang",wa:"628123456789",desc:"Contoh iklan demo.",emoji:"📷",sample:true}
+];
+const key="lapakkita_user_listings_v1";let activeCat="Semua";let query="";
+const fmt=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
+function getUserItems(){try{return JSON.parse(localStorage.getItem(key)||"[]")}catch(e){return []}}
+function saveUserItems(items){localStorage.setItem(key,JSON.stringify(items))}
+function drawCats(){const el=document.getElementById("categories");el.innerHTML="";cats.forEach(c=>{const b=document.createElement("button");b.className="chip"+(c===activeCat?" active":"");b.textContent=c;b.onclick=()=>{activeCat=c;drawCats();drawProducts()};el.appendChild(b)})}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function drawProducts(){
+ const all=[...getUserItems(),...sample];const filtered=all.filter(p=>(activeCat==="Semua"||p.category===activeCat)&&(`${p.title} ${p.city} ${p.category} ${p.desc||""}`).toLowerCase().includes(query.toLowerCase()));
+ const grid=document.getElementById("productGrid");document.getElementById("listingHeading").textContent=query?"Hasil pencarian":"Barang pilihan";
+ if(!filtered.length){grid.innerHTML='<div class="empty">Belum ada barang yang cocok.<br>Coba kata kunci atau kategori lain.</div>';return}
+ grid.innerHTML=filtered.map(p=>`<article class="card"><div class="photo">${p.image?`<img src="${p.image}" alt="${esc(p.title)}">`:`<span>${p.emoji||"📦"}</span>`}${p.sample?'<span class="tag">CONTOH</span>':'<span class="tag">IKLAN BARU</span>'}</div><div class="cardbody"><p class="price">${fmt(Number(p.price)||0)}</p><p class="title">${esc(p.title)}</p><div class="meta">📍 ${esc(p.city)} · ${esc(p.category)}</div><div class="cardactions"><button onclick="contactSeller('${esc(p.wa)}','${esc(p.title)}')">Chat penjual</button><button class="ghost" onclick="showDetails('${esc(p.id)}')">Detail</button></div></div></article>`).join("");
+}
+function contactSeller(wa,title){if(!wa||wa==="628123456789"){alert("Ini iklan contoh. Untuk menghubungi penjual sungguhan, gunakan iklan yang dibuat pengguna.");return}const n=wa.replace(/\D/g,"");window.open("https://wa.me/"+n+"?text="+encodeURIComponent("Halo, saya tertarik dengan barang: "+title+" di LapakKita."),"_blank")}
+function showDetails(id){const p=[...getUserItems(),...sample].find(x=>x.id===id);if(!p)return;alert(p.title+"\\nHarga: "+fmt(p.price)+"\\nLokasi: "+p.city+"\\nKategori: "+p.category+"\\n\\n"+(p.desc||"Tidak ada deskripsi."))}
+function openModal(){document.getElementById("modalBack").classList.add("show")}
+function closeModal(){document.getElementById("modalBack").classList.remove("show")}
+document.getElementById("openForm").onclick=openModal;document.getElementById("heroSell").onclick=openModal;document.getElementById("closeModal").onclick=closeModal;
+document.getElementById("modalBack").onclick=e=>{if(e.target.id==="modalBack")closeModal()};
+document.getElementById("searchBtn").onclick=()=>{query=document.getElementById("searchInput").value.trim();drawProducts()};
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter"){query=e.target.value.trim();drawProducts()}});
+document.getElementById("resetBtn").onclick=()=>{activeCat="Semua";query="";document.getElementById("searchInput").value="";drawCats();drawProducts()};
+document.getElementById("pCategory").innerHTML=cats.slice(1).map(c=>`<option>${c}</option>`).join("");
+document.getElementById("listingForm").onsubmit=async e=>{
+ e.preventDefault();const title=document.getElementById("pTitle").value.trim(),price=Number(document.getElementById("pPrice").value),category=document.getElementById("pCategory").value,city=document.getElementById("pCity").value.trim(),wa=document.getElementById("pWhatsapp").value.replace(/\D/g,""),desc=document.getElementById("pDesc").value.trim(),file=document.getElementById("pImage").files[0];
+ if(!/^62\d{8,15}$/.test(wa)){alert("Gunakan nomor WhatsApp format internasional, contoh 628123456789.");return}
+ let image="";if(file){if(file.size>900000){alert("Foto terlalu besar. Pilih foto di bawah 900 KB untuk demo ini.");return}image=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
+ const items=getUserItems();items.unshift({id:"u"+Date.now(),title,price,category,city,wa,desc,image,emoji:"📦",sample:false});
+ try{saveUserItems(items)}catch(err){alert("Penyimpanan browser penuh. Coba foto lebih kecil.");return}
+ e.target.reset();closeModal();activeCat="Semua";query="";document.getElementById("searchInput").value="";drawCats();drawProducts();window.scrollTo({top:0,behavior:"smooth"});alert("Iklan tersimpan di browser HP ini. Agar tampil di perangkat lain, perlu database online.");
+};
+drawCats();drawProducts();
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body></html>
